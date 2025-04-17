@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Interativa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .roxo { background-color: #b25bf0; color: white; }
+        .azul { background-color: #40E0D0; color: white; }
+        .vermelho { background-color: #ee5454; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Interatividade com Botões! 🎉</h1>
+
+    <button onclick="changeText()">Mudar Texto</button>
+    <button onclick="alert('Bem-vindo! 😄')">Boas-vindas</button>
+
+    <div>
+        <button class="roxo" onclick="changeColor('#6A0DAD')">Roxo</button>
+        <button class="azul" onclick="changeColor('#40E0D0')">Azul Turquesa</button>
+        <button class="vermelho" onclick="changeColor('#FF0000')">Vermelho</button>
+    </div>
+
+    <script>
+        function changeText() {
+            document.querySelector('h1').textContent = 'Texto Mudado! ✨';
+        }
+
+        function changeColor(color) {
+            document.body.style.backgroundColor = color;
+        }
+    </script>
+
+</body>
+</html>
