@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário com Máscaras</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    form {
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 400;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    label span {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fafafa;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #999;
+      outline: none;
+    }
+
+    .erro {
+      display: none;
+      font-size: 0.85rem;
+      color: #d33;
+      margin-top: 4px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #111;
+    }
+  </style>
+</head>
+<body>
+  <form id="formulario">
+    <h2>Cadastro</h2>
+
+    <label>
+      <span>Nome Completo</span>
+      <input type="text" id="nome" required>
+    </label>
+
+    <label>
+      <span>CPF</span>
+      <input type="text" id="cpf" maxlength="14" required>
+      <div class="erro" id="erro-cpf">CPF incompleto</div>
+    </label>
+
+    <label>
+      <span>Telefone Celular</span>
+      <input type="text" id="celular" maxlength="15" required>
+      <div class="erro" id="erro-celular">Telefone incompleto</div>
+    </label>
+
+    <label>
+      <span>Data de Nascimento</span>
+      <input type="text" id="data" maxlength="10" required>
+      <div class="erro" id="erro-data">Data inválida</div>
+    </label>
+
+    <label>
+      <span>CEP</span>
+      <input type="text" id="cep" maxlength="9" required>
+      <div class="erro" id="erro-cep">CEP incompleto</div>
+    </label>
+
+    <label>
+      <span>E-mail</span>
+      <input type="email" id="email" required>
+      <div class="erro" id="erro-email">E-mail inválido</div>
+    </label>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const cpf = document.getElementById('cpf');
+    cpf.addEventListener('input', () => {
+      cpf.value = cpf.value.replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    });
+
+    const celular = document.getElementById('celular');
+    celular.addEventListener('input', () => {
+      celular.value = celular.value.replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d{1,4})$/, '$1-$2');
+    });
+
+    const data = document.getElementById('data');
+    data.addEventListener('input', () => {
+      data.value = data.value.replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .replace(/(\d{2})(\d)/, '$1/$2');
+    });
+
+    const cep = document.getElementById('cep');
+    cep.addEventListener('input', () => {
+      cep.value = cep.value.replace(/\D/g, '')
+        .replace(/(\d{5})(\d)/, '$1-$2');
+    });
+
+    document.getElementById('formulario').addEventListener('submit', (e) => {
+      let erro = false;
+
+      if (cpf.value.length < 14) {
+        document.getElementById('erro-cpf').style.display = 'block';
+        erro = true;
+      } else document.getElementById('erro-cpf').style.display = 'none';
+
+      if (celular.value.length < 15) {
+        document.getElementById('erro-celular').style.display = 'block';
+        erro = true;
+      } else document.getElementById('erro-celular').style.display = 'none';
+
+      if (data.value.length < 10) {
+        document.getElementById('erro-data').style.display = 'block';
+        erro = true;
+      } else document.getElementById('erro-data').style.display = 'none';
+
+      if (cep.value.length < 9) {
+        document.getElementById('erro-cep').style.display = 'block';
+        erro = true;
+      } else document.getElementById('erro-cep').style.display = 'none';
+
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value);
+      if (!emailValido) {
+        document.getElementById('erro-email').style.display = 'block';
+        erro = true;
+      } else document.getElementById('erro-email').style.display = 'none';
+
+      if (erro) e.preventDefault();
+    });
+  </script>
+</body>
+</html>
